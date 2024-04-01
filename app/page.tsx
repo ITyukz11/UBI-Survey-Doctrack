@@ -13,9 +13,12 @@ export default function Home() {
 
           <h1 className="font-black text-lg sm:text-xl md:text-3xl lg:text-4xl mb-4 md:mb-10" >Survey Section Document Tracker</h1>
           <div className="flex flex-row w-full rounded-md gap-1">
-            <div className="flex flex-row w-full relative">
+            <div className="flex flex-row w-full relative overflow-hidden z-10">
             <input type="text" className="px-4 py-2 pr-8 w-full min-w-32 lg:flex-wrap mb-2 rounded-md bg-white bg-opacity-50 text-black border border-black" placeholder="Looking for..." />
-            <FaSearch className="absolute right-3 top-3 cursor-pointer" />
+            <div className="absolute right-0 cursor-pointer bg-white rounded-tr-md rounded-br-md p-[11px] border-t border-r border-b border-black ">
+            <FaSearch/>
+
+            </div>
             </div>
            
             <select className="px-4 py-2 mb-2 rounded-md bg-white bg-opacity-50 text-black border border-black">
