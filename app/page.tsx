@@ -8,7 +8,7 @@ export default function Home() {
         <div className="flex flex-col">
           <Image src='/UBI_Logo.jpg' height={100} width={100} alt='UBI Logo' />
           <h1 className="font-bold text-base sm:text-xl md:text-2xl lg:text-3xl">ULTICON BUILDERS, INC.</h1>
-          <h3 className="text-base sm:text-sm md:text-base mb-10">QUADRUPLE "A" GENERAL CONTRACTOR</h3>
+          <h3 className="text-base sm:text-sm md:text-base mb-10">QUADRUPLE &apos;AAAA&apos; GENERAL CONTRACTOR</h3>
           <h2 className="font-semibold text-base sm:text-xl md:text-2xl lg:text-3xl text-white" style={{ fontFamily: 'Segoe Script' }}>Welcome to</h2>
 
           <h1 className="font-black text-base sm:text-xl md:text-3xl lg:text-4xl text-white mb-10" >Survey Section Document Tracker</h1>
