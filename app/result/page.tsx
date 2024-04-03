@@ -5,13 +5,20 @@ import { FaBackward } from 'react-icons/fa';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
 
-
-const Page: React.FC = () => {
-  const searchParams = useSearchParams()
-  const searchValue = searchParams.get('search')
-
+const ResultPage: React.FC = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
+      <ResultContent />
+    </Suspense>
+  );
+}
+
+const ResultContent: React.FC = () => {
+  const searchParams = useSearchParams();
+  const searchValue = searchParams.get('search');
+
+  return (
+   
       <AnimatePresence>
         <motion.div
           className="relative bg-cover bg-center bg-no-repeat min-h-screen"
@@ -67,8 +74,8 @@ const Page: React.FC = () => {
           </div>
         </motion.div>
       </AnimatePresence>
-    </Suspense>
+ 
   );
 };
 
-export default Page;
+export default ResultPage;
