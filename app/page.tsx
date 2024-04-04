@@ -1,35 +1,45 @@
 'use client'
+import Header from "../components/ui/Header";
 import Image from "next/image";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import LoginModal from "./loginmodal";
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+ const router = useRouter();
+ const { data: session } = useSession();
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      // Navigate to the result page with the search query parameter
-      window.location.href = `/result?search=${searchValue}`;
-    }
-  };
+ const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+   if (e.key === 'Enter') {
+     if (session) {
+       // Navigate to the result page with the search query parameter
+       router.push(`/documents/result?search=${searchValue}`);
+     } else {
+       // Show a message to login first if the user is not logged in
+       alert('Please login first to search.');
+     }
+   }
+ };
   return (
     <AnimatePresence>
       <motion.div
         className="relative bg-cover bg-center bg-no-repeat min-h-screen"
         style={{ backgroundImage: "url('/result-background.png')" }}
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0.5 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        exit={{ opacity: 0.5 }}
       >
     <main className="flex min-h-screen flex-col justify-center p-5 lg:p-24" style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
       {/* Sign In button */}
       <button
         className="absolute right-5 top-5 cursor-pointer rounded-lg p-2 border border-black transition duration-300 bg-gradient-to-r from-[#c6b384] to-[#d3c4a1] hover:to-[#c6b384]"
-        onClick={() => setIsModalOpen(true)} // Open the modal when button is clicked
+        onClick={() => router.push('/auth/login')} // Open the modal when button is clicked
       >
         Sign In
       </button>
@@ -53,8 +63,15 @@ export default function Home() {
                     onChange={(e) => setSearchValue(e.target.value)}
                     onKeyDown={handleKeyPress}
                   />
-                  <Link href={{ pathname: '/result', query: { search: searchValue } }}>
-                    <div className="absolute right-0 cursor-pointer rounded-tr-md rounded-br-md p-[11px] border-t border-r border-b border-black transition duration-300 bg-gradient-to-r from-[#c6b384] to-[#d3c4a1] hover:to-[#c6b384]">
+                  <Link href={session ? '/documents/result' : '#'}>
+                    <div
+                      className="absolute right-0 cursor-pointer rounded-tr-md rounded-br-md p-[11px] border-t border-r border-b border-black transition duration-300 bg-gradient-to-r from-[#c6b384] to-[#d3c4a1] hover:to-[#c6b384]"
+                      onClick={() => {
+                        if (!session) {
+                          alert('Please login first to search.');
+                        }
+                      }}
+                    >
                       <FaSearch className="text-black" />
                     </div>
                   </Link>
@@ -74,6 +91,5 @@ export default function Home() {
     </main>
     </motion.div>
     </AnimatePresence>
-
   );
 }

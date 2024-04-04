@@ -1,11 +1,37 @@
 'use client'
 import Link from 'next/link';
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { FaBackward } from 'react-icons/fa';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import axios from 'axios';
+import Header from '../../../components/ui/Header';
+import { useSession } from 'next-auth/react';
 
 const ResultPage: React.FC = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    async function fetchDocuments() {
+      try {
+        // If the user is not logged in, redirect them to the login page
+        if (!session) {
+          router.replace('/');
+          return;
+        }
+
+        // Fetch documents if the user is logged in
+        const response = await axios.get('/api/documents');
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+      }
+    }
+
+    fetchDocuments();
+  }, [session, router]);
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <ResultContent />
@@ -15,7 +41,8 @@ const ResultPage: React.FC = () => {
 
 const ResultContent: React.FC = () => {
   const searchParams = useSearchParams();
-  const searchValue = searchParams.get('search');
+  
+  const searchValue = searchParams?.get('search'); 
 
   return (
    
@@ -26,8 +53,9 @@ const ResultContent: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}>
+            <Header />
           <div className="flex flex-col justify-between mx-auto p-8 h-screen">
-            <div>
+            <div className='overflow-x-auto'>
               <h1 className="text-4xl lg:text-5xl xl:text-5xl font-semibold mb-16 p-2 bg-gradient-to-r from-white to-[#C39B40] text-center text-black rounded-lg">Result for:
                 <span className="font-normal"> {searchValue}</span></h1>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
@@ -40,6 +68,7 @@ const ResultContent: React.FC = () => {
                   <p className="mb-2 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">File Location: <span className="font-normal">F:/File</span></p>
                 </div>
               </div>
+              <div className='overflow-x-auto'>
               <table className="w-full rounded-xl border border-white border-collapse overflow-hidden">
                 <thead className="bg-[#c6b384]">
                   <tr>
@@ -62,6 +91,8 @@ const ResultContent: React.FC = () => {
                   {/* Add more rows as needed */}
                 </tbody>
               </table>
+              </div>
+         
             </div>
             <div className='mt-auto'>
               <Link href="/">

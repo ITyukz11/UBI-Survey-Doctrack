@@ -1,5 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { LoginButton } from "@/components/auth/login-button";
+
+const font = Poppins({
+  subsets:["latin"],
+  weight:["600"]
+})
 
 interface LoginModalProps {
   openModal: boolean;
@@ -9,7 +18,7 @@ interface LoginModalProps {
 export default function LoginModal({ openModal, closeModal }: LoginModalProps) {
   return (
     <Transition appear show={openModal} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Dialog as="div" className="relative z-10 " onClose={closeModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -21,7 +30,6 @@ export default function LoginModal({ openModal, closeModal }: LoginModalProps) {
         >
           <div className="fixed inset-0 bg-black/25" />
         </Transition.Child>
-
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
@@ -33,38 +41,40 @@ export default function LoginModal({ openModal, closeModal }: LoginModalProps) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-  <Dialog.Title
-    as="h3"
-    className="text-lg font-medium leading-6 text-gray-900"
-  >
-    Sign In
-  </Dialog.Title>
-
-  <div className="mt-4 space-y-4 text-center">
-    <div className="relative">
-      <input
-        type="text"
-        placeholder="Username"
-        className="w-full h-10 pl-3 pr-10 rounded-lg bg-gradient-to-r from-yellow-200 to-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
-    <div className="relative">
-      <input
-        type="password"
-        placeholder="Password"
-        className="w-full h-10 pl-3 pr-10 rounded-lg bg-gradient-to-r from-yellow-200 to-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
-    <button
-      type="button"
-      className=" inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-black bg-gradient-to-r from-yellow-200 to-blue-200 hover:from-yellow-300 hover:to-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-      onClick={closeModal}
-    >
-      Ay For The Go
-    </button>
-  </div>
-</Dialog.Panel>
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-center align-middle shadow-xl transition-all
+                                bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-yellow-400 to-orange-800 space-y-6 ">
+                <Dialog.Title
+                  as="h3"
+                  className={cn("text-6xl font-semibold drop-shadow-md leading-6 text-black pt-5",font.className)}>
+                🔐 Sign In
+                </Dialog.Title>
+                <p className="text-black text-lg">This is for UBI Survey Department only!</p>
+                <div className="space-y-6 ">
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      className="w-full h-10 pl-3 pr-10 rounded-lg bg-gradient-to-r from-yellow-200 to-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      className="w-full h-10 pl-3 pr-10 rounded-lg bg-gradient-to-r from-yellow-200 to-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                  <LoginButton>
+                    <Button variant={'secondary'} size="lg">
+                      Ay for the go!
+                    </Button>
+                  </LoginButton>
+                  </div>
+              
+                
+                </div>
+              </Dialog.Panel>
 
             </Transition.Child>
           </div>
