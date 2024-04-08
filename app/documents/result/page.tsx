@@ -10,34 +10,33 @@ import { useSession } from 'next-auth/react';
 
 const ResultPage: React.FC = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
-    async function fetchDocuments() {
-      try {
-        // If the user is not logged in, redirect them to the login page
-        if (!session) {
-          router.replace('/');
-          return;
-        }
+    if (status === 'loading') return; // Skip if session status is still loading
 
-        // Fetch documents if the user is logged in
-        const response = await axios.get('/api/documents');
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error fetching documents:', error);
-      }
+    if (!session) {
+      router.replace('/auth/login'); // Redirect unauthenticated users to the login page
+    } else {
+      fetchDocuments(); // Fetch documents if the user is authenticated
     }
+  }, [session, status, router]);
 
-    fetchDocuments();
-  }, [session, router]);
+  const fetchDocuments = async () => {
+    try {
+      const response = await axios.get('/api/documents');
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+    }
+  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ResultContent />
+      {session && <ResultContent />}
     </Suspense>
   );
-}
+};
 
 const ResultContent: React.FC = () => {
   const searchParams = useSearchParams();

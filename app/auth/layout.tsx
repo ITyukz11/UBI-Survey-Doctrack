@@ -20,7 +20,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           style={{ backgroundImage: "url('/background.png')" }}>
               <Label className=' cursor-pointer transition-transform duration-300 ease-in-out transform hover:-translate-x-2' onClick={()=> router.push('/')}>
      
-     <p className='text-white flex flex-row mb-4 gap-2 w-96'> <FaLongArrowAltLeft /> Back</p>
+     <p className='text-white flex flex-row mb-4 gap-2 w-96'> <FaLongArrowAltLeft /> Home</p>
       </Label>
           {children}
    

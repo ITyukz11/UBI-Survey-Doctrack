@@ -18,12 +18,17 @@ import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { login } from "@/actions/login";
+import { useRouter } from "next/navigation";
 
 
 export const LoginForm = () => {
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
+    const [loading, setLoading] = useState(false); // Initialize loading state
+    
+    const router = useRouter(); // Initialize useRouter
+
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
         defaultValues:{
@@ -32,16 +37,29 @@ export const LoginForm = () => {
         }
     })
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) =>{
-        setError("")
-        setSuccess("")
-        startTransition(()=>{
-            login(values)
-            .then((data)=>{
-                setError(data.error)
-                setSuccess(data.success)
+    const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+        setError('');
+        setSuccess('');
+        setLoading(true); // Set loading state to true
+      
+        startTransition(() => {
+          login(values)
+            .then((data) => {
+              setError(data.error);
+              setSuccess(data.success);
+              setLoading(false); // Set loading state to false when login request completes
+
+              if (!data.error) {
+                router.push('/'); // Redirect to '/' if there's no error (login is successful)
+              }
+
+            })
+            .catch((error) => {
+              setError('An error occurred while logging in.');
+              setLoading(false); // Set loading state to false if there's an error
             });
-        })
+        });
+
 
         //Pwde axios diri
         //axios.post("/your/api/router", values).then .get etc
