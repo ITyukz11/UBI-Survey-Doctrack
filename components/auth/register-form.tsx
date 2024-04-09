@@ -18,12 +18,19 @@ import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { register } from "@/actions/register";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 export const RegisterForm = () => {
     const [isPending, startTransition] = useTransition();
+    const [loading, setLoading] = useState(false); // Initialize loading state
+
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
+
+    const router = useRouter(); // Initialize useRouter
+
     const form = useForm<z.infer<typeof RegisterSchema>>({
         resolver: zodResolver(RegisterSchema),
         defaultValues: {
@@ -34,19 +41,28 @@ export const RegisterForm = () => {
         }
     })
 
-    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-        setError("")
-        setSuccess("")
-        startTransition(() => {
-            register(values)
-                .then((data) => {
-                    setError(data.error)
-                    setSuccess(data.success)
-                });
-        })
-
-        //Pwde axios diri
-        //axios.post("/your/api/router", values).then .get etc
+    const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+        if(values.key=="123456"){
+            setError("")
+            setSuccess("")
+            startTransition(() => {
+                setLoading(true)
+                register(values)
+                    .then((data) => {
+                        setError(data.error)
+                        setSuccess(data.success)
+    
+                        setTimeout(() => {
+                            if (!data.error) {
+                              router.push('/auth/login'); 
+                            }
+                            setLoading(false)
+                          }, 2000); // Delay for 2 seconds                      
+                    });
+            })
+        }else{
+            setError('Invalid key!')
+        }
     }
 
     return (
@@ -55,6 +71,7 @@ export const RegisterForm = () => {
                 headerLabel="Create an account"
                 backButtonLabel="Already have an account?"
                 backButtonHref="/auth/login"
+                loading={loading}
                 showSocial>
 
                 <Form {...form}>
@@ -72,7 +89,7 @@ export const RegisterForm = () => {
                                             <Input
                                                 {...field}
                                                 placeholder="Sam M. Montaner"
-                                                disabled={isPending} />
+                                                disabled={loading} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -88,7 +105,7 @@ export const RegisterForm = () => {
                                             <Input
                                                 {...field}
                                                 placeholder="nidoramas@example.com"
-                                                disabled={isPending}
+                                                disabled={loading}
                                                 autoComplete="off" />
                                         </FormControl>
                                         <FormMessage />
@@ -106,7 +123,7 @@ export const RegisterForm = () => {
                                                 {...field}
                                                 placeholder="******"
                                                 type="password"
-                                                disabled={isPending} />
+                                                disabled={loading} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -123,7 +140,7 @@ export const RegisterForm = () => {
                                                 {...field}
                                                 placeholder="******"
                                                 type="password"
-                                                disabled={isPending} />
+                                                disabled={loading} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -135,7 +152,7 @@ export const RegisterForm = () => {
                         <Button
                             typeof="submit"
                             className="w-full"
-                            disabled={isPending}
+                            disabled={loading}
                         >
                             Create an account
                         </Button>

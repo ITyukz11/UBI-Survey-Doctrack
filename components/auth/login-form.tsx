@@ -33,9 +33,10 @@ export const LoginForm = () => {
         resolver: zodResolver(LoginSchema),
         defaultValues:{
             email:"",
-            password:""
+            password:"",
         }
     })
+    
 
     const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
         setError('');
@@ -43,6 +44,7 @@ export const LoginForm = () => {
         setLoading(true); // Set loading state to true
       
         startTransition(() => {
+            setLoading(true)
           login(values)
             .then((data) => {
               setError(data.error);
@@ -64,6 +66,8 @@ export const LoginForm = () => {
         //Pwde axios diri
         //axios.post("/your/api/router", values).then .get etc
     }
+
+    console.log("isPending: ",isPending)
     
     return (
         <div className=" w-96">
@@ -71,6 +75,7 @@ export const LoginForm = () => {
             headerLabel="This is for UBI Survey Department only!"
             backButtonLabel="Don't have an account?"
             backButtonHref="/auth/register"
+            loading={loading}
             showSocial>
              
           <Form {...form}>
@@ -88,7 +93,7 @@ export const LoginForm = () => {
                                 <Input
                                 {...field}
                                 placeholder="nidoramas@example.com"
-                                disabled={isPending}/>
+                                disabled={loading}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -106,7 +111,7 @@ export const LoginForm = () => {
                                 {...field}
                                 placeholder="******"
                                 type="password"
-                                disabled={isPending}/>
+                                disabled={loading}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -118,7 +123,7 @@ export const LoginForm = () => {
                 <Button
                     typeof="submit"
                     className="w-full"
-                    disabled={isPending}
+                    disabled={loading}
                 >
                     Login
                 </Button>

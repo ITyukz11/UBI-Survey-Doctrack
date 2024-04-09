@@ -70,7 +70,7 @@ export default function Home() {
       >
         <main className="flex min-h-screen flex-col justify-center p-5 lg:p-24" style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
           {/* Sign In button */}
-          {!session.data?.user?.name ?
+          {session.status != 'authenticated' ?
             <Button
               className="absolute right-5 top-5 cursor-pointer rounded-lg p-2 border border-black transition duration-300 bg-gradient-to-r from-[#c6b384] to-[#d3c4a1] hover:to-[#c6b384]"
               onClick={() => router.push('/auth/login')} // Open the modal when button is clicked
