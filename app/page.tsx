@@ -123,7 +123,7 @@ export default function Home() {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel onClick={()=> setShowAlert(false)}>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={authGuard}>Login</AlertDialogAction>
+                        <AlertDialogAction onClick={()=> router.push('/auth/login')}>Login</AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
