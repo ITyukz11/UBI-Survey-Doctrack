@@ -47,9 +47,10 @@ const ResultContent: React.FC = () => {
    
      <div>
             <Header />
-          <div className="flex flex-col justify-between mx-auto p-8 h-screen">
+          <div className="flex flex-col justify-between mx-auto p-8 h-screen pt-24">
             <div className='overflow-x-auto'>
-              <h1 className="text-4xl lg:text-5xl xl:text-5xl font-semibold mb-16 p-2 bg-gradient-to-r from-white to-[#C39B40] text-center text-black rounded-lg">Result for:
+              <h1 className="text-4xl lg:text-5xl xl:text-5xl font-semibold mb-16 p-2 bg-gradient-to-r from-white to-[#C39B40] text-center text-black rounded-lg">
+                Result for:
                 <span className="font-normal"> {searchValue}</span></h1>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
                 <div className="mb-8">
@@ -87,7 +88,7 @@ const ResultContent: React.FC = () => {
               </div>
          
             </div>
-            <div className='mt-auto'>
+            <div className='absolute bottom-8 left-8'>
               <Link href="/">
                 <button
                   className="cursor-pointer rounded-lg p-2 border flex flex-row gap-1 items-center border-black bg-gradient-to-r from-[#c6b384] to-[#d3c4a1] hover:to-[#c6b384] transition duration-300  hover:-translate-x-2">

@@ -24,3 +24,10 @@ export const RegisterSchema = z.object({
     }),
  
 })
+
+export const AccomplishmentFormSchema = z.object({
+    region: z.string().min(1, { message: "Please select a region *" }),
+    contractId: z.string().min(1, { message: "Contract ID is required *" }),
+    surveyor: z.string().min(1,{message: "Surveyor/Designer is required *"}),
+    fileLocation: z.string().min(1,{message: "File Location is required *"})
+});

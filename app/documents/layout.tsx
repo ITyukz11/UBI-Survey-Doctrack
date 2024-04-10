@@ -6,7 +6,7 @@ const DocumentLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <AnimatePresence>
             <motion.div
-                className="relative bg-cover bg-center bg-no-repeat min-h-screen"
+                className="bg-cover bg-center bg-no-repeat min-h-screen"
                 style={{ backgroundImage: "url('/result-background.png')" }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

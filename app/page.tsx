@@ -1,5 +1,4 @@
 'use client'
-import Header from "../components/ui/Header";
 import Image from "next/image";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -8,7 +7,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { ShowAlert } from "@/components/auth/alert";
 
 
 import {
@@ -20,10 +18,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Label } from "@/components/ui/label";
+import Header from "@/components/ui/Header";
 
 
 export default function Home() {
@@ -63,14 +61,14 @@ export default function Home() {
     <AnimatePresence>
       <motion.div
         className="relative bg-cover bg-center bg-no-repeat min-h-screen"
-        style={{ backgroundImage: "url('/result-background.png')" }}
         initial={{ opacity: 0.5 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0.5 }}
       >
-        <main className="flex min-h-screen flex-col justify-center p-5 lg:p-24" style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
+        <main className="flex min-h-screen flex-col justify-center " style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
           {/* Sign In button */}
-          {session.status != 'authenticated' ?
+          <Header/>
+          {/* {session.status != 'authenticated' ?
             <Button
               className="absolute right-5 top-5 cursor-pointer rounded-lg p-2 border border-black transition duration-300 bg-gradient-to-r from-[#c6b384] to-[#d3c4a1] hover:to-[#c6b384]"
               onClick={() => router.push('/auth/login')} // Open the modal when button is clicked
@@ -82,11 +80,11 @@ export default function Home() {
               <Button onClick={() => signOut()}>
                 Logout
               </Button>
-            </div>}
+            </div>} */}
           {/* {showAlert && <ShowAlert label="Please login first to search" />} */}
           {/* Render LoginModal if isModalOpen is true */}
 
-          <div className="flex text-black flex-wrap z-10 min-w-fit max-w-5xl lg:w-[65%] items-center right-auto justify-between font-mono text-sm lg:flex border-2 border-black rounded-3xl overflow-hidden bg-white bg-opacity-25 p-2 md:p-16">
+          <div className="flex text-black  m-5 lg:m-24 flex-wrap z-10 min-w-fit max-w-5xl lg:w-[65%] items-center right-auto justify-between font-mono text-sm lg:flex border-2 border-black rounded-3xl overflow-hidden bg-white bg-opacity-25 p-2 md:p-16">
             <div className="flex flex-col">
               <Image src='/UBI_Logo.jpg' height={100} width={100} alt='UBI Logo' />
               <h1 className="font-bold text-base sm:text-xl md:text-2xl lg:text-3xl">ULTICON BUILDERS, INC.</h1>
