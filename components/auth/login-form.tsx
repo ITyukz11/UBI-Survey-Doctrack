@@ -57,7 +57,7 @@ export const LoginForm = () => {
 
             })
             .catch((error) => {
-              setError('An error occurred while logging in.');
+              setError('An error occurred while logging in. Error: ' + error);
               setLoading(false); // Set loading state to false if there's an error
             });
         });
