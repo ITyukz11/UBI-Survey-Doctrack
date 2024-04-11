@@ -11,7 +11,8 @@ export const DialogAccomplishment = ({ openDialog, closeDialog }: DialogAccompli
 
   return (
     <Transition appear show={openDialog} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeDialog}>
+        <Dialog as="div" className="relative z-10" onClose={() => null} static>
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -45,7 +46,7 @@ export const DialogAccomplishment = ({ openDialog, closeDialog }: DialogAccompli
                   </Dialog.Title>
                   
 
-               <AccomplishmentForm/>
+               <AccomplishmentForm closeDialog={closeDialog}/>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

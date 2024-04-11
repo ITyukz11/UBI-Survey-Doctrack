@@ -11,7 +11,11 @@ import { useForm } from 'react-hook-form';
 import { AccomplishmentFormSchema } from '@/schemas';
 import { Label } from '../ui/label';
 
-export const AccomplishmentForm = () => {
+interface AccomplishmentFormProps {
+    closeDialog: ()=> void;
+}
+
+export const AccomplishmentForm = ({closeDialog}:AccomplishmentFormProps) => {
     const session = useSession();
     const [region, setRegion] = useState('');
     const [contractId, setContractId] = useState('');
@@ -129,7 +133,7 @@ export const AccomplishmentForm = () => {
                             <div className='flex flex-row gap-1'>
                                 <FormControl>
                                     <Input
-                                     {...field}
+                                        {...field}
                                         readOnly
                                     />
                                 </FormControl>
@@ -162,8 +166,10 @@ export const AccomplishmentForm = () => {
                         </FormItem>
                     )}
                 />
-
-                <Button type="submit" disabled={loading}>Submit</Button>
+                <div className='flex flex-row justify-between'>
+                    <Button type="button" variant="outline" onClick={closeDialog}>Cancel</Button>
+                    <Button type="submit" disabled={loading}>Submit</Button>
+                </div>
             </form>
         </Form>
     );

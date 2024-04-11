@@ -4,8 +4,8 @@ export const LoginSchema = z.object({
     email: z.string().email({
         message: "Email is required"
     }),
-    password:z.string().min(1, {
-        message:"Password is required"
+    password:z.string().min(6, {
+        message:"Password is required atleast 6 characters"
     })
 })
 
@@ -31,3 +31,18 @@ export const AccomplishmentFormSchema = z.object({
     surveyor: z.string().min(1,{message: "Surveyor/Designer is required *"}),
     fileLocation: z.string().min(1,{message: "File Location is required *"})
 });
+
+export const ProfileSchema = z.object({
+    fullname: z.string().min(1, {
+        message: "Please input your full name *"
+    }),
+    email: z.string().email({
+        message:"Please provide valid email address *"
+    }),
+    password:z.string().min(6, {
+        message:"Password is required atleast 6 characters"
+    }),
+    passwordConfirmation:z.string().min(6, {
+        message:"Password is required atleast 6 characters"
+    })
+})
