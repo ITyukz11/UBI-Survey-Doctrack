@@ -48,7 +48,7 @@ export const HelpDialog = ({ openDialog, closeDialog }: HelpDialogProps) => {
                                 <Dialog.Description>
   <strong>Need Assistance?</strong>
   <p>
-    For any inquiries or assistance regarding the system, please don't hesitate to reach out to our dedicated support team. Your satisfaction and success are our top priorities, and we're here to help you every step of the way.
+    For any inquiries or assistance regarding the system, please don&apos;t hesitate to reach out to our dedicated support team. Your satisfaction and success are our top priorities, and we&apos;re here to help you every step of the way.
   </p>
   <hr style={{ marginTop: '1rem', marginBottom: '1rem' }} />
   <p>Contact Information:</p>
@@ -74,7 +74,7 @@ export const HelpDialog = ({ openDialog, closeDialog }: HelpDialogProps) => {
   </ul>
   <hr style={{ marginTop: '1rem', marginBottom: '1rem' }} />
   <p>
-    Our team is committed to providing you with prompt and effective support to ensure your experience with our system is seamless and productive. Don't hesitate to get in touch with us if you have any questions or require assistance.
+    Our team is committed to providing you with prompt and effective support to ensure your experience with our system is seamless and productive. Don&apos;t hesitate to get in touch with us if you have any questions or require assistance.
   </p>
 </Dialog.Description>
 

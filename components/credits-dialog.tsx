@@ -48,8 +48,8 @@ export const CreditsDialog = ({ openDialog, closeDialog }: CreditsDialogProps) =
 
                                 </Dialog.Title>
                                 <Dialog.Description>
-                                <p>This system was built by the following individuals for the <b>Survey Engineer Department of Ulticon Inc.</b></p>
-                                <hr style={{ marginTop: '1rem', marginBottom: '1rem' }} />
+                                    <p>This system was built by the following individuals for the <b>Survey Engineer Department of Ulticon Inc.</b></p>
+                                    <hr style={{ marginTop: '1rem', marginBottom: '1rem' }} />
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <img src="/programmer.jpeg" alt="Errol Robyn M. Abella" style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '1rem' }} />
                                         <div>
@@ -66,6 +66,7 @@ export const CreditsDialog = ({ openDialog, closeDialog }: CreditsDialogProps) =
                                         </div>
                                     </div>
                                 </Dialog.Description>
+
 
 
                             </Dialog.Panel>
