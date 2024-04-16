@@ -41,7 +41,10 @@ const ResultPage: React.FC = () => {
 const ResultContent: React.FC = () => {
   const searchParams = useSearchParams();
   
-  const searchValue = searchParams?.get('search'); 
+  const region = searchParams?.get('region');
+  const contract_id = searchParams?.get('contract_id');
+  const designer = searchParams?.get('designer');
+  const createdAt = searchParams?.get('createdAt');
 
   return (
    
@@ -51,14 +54,14 @@ const ResultContent: React.FC = () => {
             <div className='overflow-x-auto'>
               <h1 className="text-4xl lg:text-5xl xl:text-5xl font-semibold mb-16 p-2 bg-gradient-to-r from-white to-[#C39B40] text-center text-black rounded-lg">
                 Result for:
-                <span className="font-normal"> {searchValue}</span></h1>
+                <span className="font-normal">{contract_id}</span></h1>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
                 <div className="mb-8">
-                  <p className="mb-2 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Region: <span className="font-normal">Region XI</span></p>
-                  <p className="mb-2 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Contract ID: <span className="font-normal">ABCD2_1</span></p>
+                  <p className="mb-2 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Region: <span className="font-normal">{region}</span></p>
+                  <p className="mb-2 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Contract ID: <span className="font-normal">{contract_id}</span></p>
                 </div>
                 <div className="mb-8">
-                  <p className="mb-2 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Surveyor/Designer: <span className="font-normal">Yami Salutan</span></p>
+                  <p className="mb-2 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Surveyor/Designer: <span className="font-normal">{designer}</span></p>
                   <p className="mb-2 font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">File Location: <span className="font-normal">F:/File</span></p>
                 </div>
               </div>

@@ -22,11 +22,15 @@ import {
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Label } from "@/components/ui/label";
 import Header from "@/components/ui/Header";
+import { DialogResult } from "@/components/dialog-result";
 
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
+  const [dialogResult, setDialogResult] = useState(false)
+  const [filterData, setFilterData] = useState('Data')
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -50,7 +54,9 @@ export default function Home() {
       setShowAlert(true)
     } 
     if(session.status === 'authenticated') {
-      await router.push(`/documents/result?search=${searchValue}`);
+  
+      setDialogResult(true)
+      //await router.push(`/documents/result?search=${searchValue}`);
       // Fetch documents if the user is authenticated
     }
   }
@@ -134,7 +140,9 @@ export default function Home() {
 
 
                 </div>
-                <select className="px-4 py-2 mb-2 rounded-md bg-white bg-opacity-50 text-black border border-black outline-none cursor-pointer">
+                <select className="px-4 py-2 mb-2 rounded-md bg-white bg-opacity-50 text-black border border-black outline-none cursor-pointer"
+                value={filterData} // Bind the selected value to the state
+                onChange={(e)=> setFilterData(e.target.value)}>
                   <option value="data">Data</option>
                   <option value="surveyor">Surveyor</option>
                   <option value="inventory">Inventory</option>
@@ -144,6 +152,8 @@ export default function Home() {
             </div>
           </div>
           <LoginModal openModal={isModalOpen} closeModal={() => setIsModalOpen(false)} />
+          <DialogResult openDialog={dialogResult} closeDialog={()=> setDialogResult(false)} searchValue={searchValue} filter={filterData}/>
+
         </main>
       </motion.div>
     </AnimatePresence>

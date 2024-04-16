@@ -10,6 +10,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { AccomplishmentFormSchema } from '@/schemas';
 import { Label } from '../ui/label';
+import { encodeAccomplishment } from '@/actions/accomplishment/accomplishment';
+import { useRouter } from 'next/navigation';
+import { FormError } from '../form-error';
+import { FormSuccess } from '../form-success';
+import { LoadingSpinner } from '../LoadingSpinner';
 
 interface AccomplishmentFormProps {
     closeDialog: ()=> void;
@@ -26,6 +31,9 @@ export const AccomplishmentForm = ({closeDialog}:AccomplishmentFormProps) => {
     const [success, setSuccess] = useState<string | undefined>("");
     const [loading, setLoading] = useState(false); // Initialize loading state
 
+    const router = useRouter()
+
+
     const form = useForm<z.infer<typeof AccomplishmentFormSchema>>({
         resolver: zodResolver(AccomplishmentFormSchema),
         defaultValues: {
@@ -37,31 +45,37 @@ export const AccomplishmentForm = ({closeDialog}:AccomplishmentFormProps) => {
     })
 
     const onSubmit = (values: z.infer<typeof AccomplishmentFormSchema>) => {
-
         setError('');
         setSuccess('');
         setLoading(true); // Set loading state to true
-
+    
         startTransition(() => {
-            setLoading(true)
+            setLoading(true);
+    
+            encodeAccomplishment(values)
+                .then((data) => {
+                    setError(data.error);
+                    setSuccess(data.success);
+    
+                    if (!data.error) {
+                        // If there's no error, close the dialog after 2 seconds
+                        setTimeout(() => {
+                            closeDialog();
+                        }, 2000);
+                    }else{
+                    // set loading to false when the operation errors
+                        setLoading(false);
 
-            // login(values)
-            //     .then((data) => {
-            //         setError(data.error);
-            //         setSuccess(data.success);
-            //         setLoading(false); // Set loading state to false when login request completes
-
-            //         if (!data.error) {
-            //             router.push('/'); // Redirect to '/' if there's no error (login is successful)
-            //         }
-
-            //     })
-            //     .catch((error) => {
-            //         setError('An error occurred while logging in. Error: ' + error);
-            //         setLoading(false); // Set loading state to false if there's an error
-            //     });
+                    }
+    
+                })
+                .catch((error) => {
+                    setError('An error occurred while logging in. Error: ' + error);
+                    setLoading(false); // Set loading state to false if there's an error
+                });
         });
-    }
+    };
+    
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -135,6 +149,7 @@ export const AccomplishmentForm = ({closeDialog}:AccomplishmentFormProps) => {
                                     <Input
                                         {...field}
                                         readOnly
+                                        disabled={loading}
                                     />
                                 </FormControl>
                                 <Label htmlFor="fileInput">
@@ -161,14 +176,20 @@ export const AccomplishmentForm = ({closeDialog}:AccomplishmentFormProps) => {
                             <FormControl>
                                 <Input
                                     {...field}
-                                    readOnly />
+                                    readOnly
+                                    disabled={loading} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
+                <FormSuccess message={success}/>
+                <FormError message={error}/>
                 <div className='flex flex-row justify-between'>
-                    <Button type="button" variant="outline" onClick={closeDialog}>Cancel</Button>
+                    <Button type="button" variant="outline" onClick={closeDialog} disabled={loading}>Cancel</Button>
+                    <div className='flex flex-row gap-1 items-center'>
+                    {loading && <LoadingSpinner/>}
                     <Button type="submit" disabled={loading}>Submit</Button>
+                    </div>
                 </div>
             </form>
         </Form>

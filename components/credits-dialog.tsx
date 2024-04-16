@@ -58,11 +58,11 @@ export const CreditsDialog = ({ openDialog, closeDialog }: CreditsDialogProps) =
                                         </div>
                                     </div>
                                     <hr style={{ marginTop: '1rem', marginBottom: '1rem' }} />
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    < div style={{ display: 'flex', alignItems: 'center' }}>
                                         <img src="/janela.jpg" alt="April Rosse C. Cuizon" style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '1rem' }} />
                                         <div>
-                                            <strong>April Rosse C. Cuizon</strong><br />
-                                            Web Designer / Canva / Figma / Adobe Photoshop
+                                            <strong>Engr. April Rosse C. Cuizon</strong><br />
+                                            Web Designer / Canva / Figma / Adobe Photoshop  / Geodetic Engineer
                                         </div>
                                     </div>
                                 </Dialog.Description>
