@@ -1,9 +1,25 @@
 import * as z from "zod";
 import { LoginSchema } from "@/schemas";
 import { signIn } from "next-auth/react";
+import fetch from 'node-fetch'; // Import fetch for making HTTP requests
 
+// Function to check internet connectivity
+async function checkInternetConnectivity() {
+  try {
+    const response = await fetch('https://dns.google.com/resolve');
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
+}
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   try {
+       // Check internet connectivity
+       const isConnected = await checkInternetConnectivity();
+
+       if (!isConnected) {
+        return { error: 'No internet connection' };
+       }
     const validatedFields = LoginSchema.safeParse(values);
 
     if (!validatedFields.success) {

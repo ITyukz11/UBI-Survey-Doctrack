@@ -1,9 +1,27 @@
 import { NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { hash } from 'bcrypt';
+import fetch from 'node-fetch'; // Import fetch for making HTTP requests
+
+// Function to check internet connectivity
+async function checkInternetConnectivity() {
+  try {
+    const response = await fetch('https://dns.google.com/resolve');
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
+}
 
 export async function POST(request: Request) {
   try {
+    // Check internet connectivity
+    const isConnected = await checkInternetConnectivity();
+
+    if (!isConnected) {
+      return NextResponse.json({ error: 'No internet connection' });
+    }
+
     const { fullname, email, password } = await request.json();
 
     console.log('api/auth/register route: ', { fullname, email, password });

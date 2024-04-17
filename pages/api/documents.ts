@@ -2,9 +2,29 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../lib/prisma';
 
+import fetch from 'node-fetch'; // Import fetch for making HTTP requests
+
+// Function to check internet connectivity
+async function checkInternetConnectivity() {
+  try {
+    const response = await fetch('https://dns.google.com/resolve');
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
+
+      // Check internet connectivity
+    const isConnected = await checkInternetConnectivity();
+
+    if (!isConnected) {
+      return res.json({ error: 'No internet connection' });
+    }
+
       const { contract_id, designer } = req.query; // Get the search terms from the query parameters
 
       let documents;
