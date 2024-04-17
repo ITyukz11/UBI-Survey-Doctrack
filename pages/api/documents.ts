@@ -7,7 +7,7 @@ import fetch from 'node-fetch'; // Import fetch for making HTTP requests
 // Function to check internet connectivity
 async function checkInternetConnectivity() {
   try {
-    const response = await fetch('https://dns.google.com/resolve');
+    const response = await fetch('https://dns.google/resolve?name=example.com&type=A');
     return response.ok;
   } catch (error) {
     return false;
